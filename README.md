@@ -1,67 +1,54 @@
-# UIGen
+# CLAUDE.md
 
-AI-powered React component generator with live preview.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Prerequisites
+## Development Commands
 
-- Node.js 18+
-- npm
+- **Start development server**: `npm run dev`
+- **Build the application**: `npm run build`
+- **Run the application**: `npm start`
+- **Lint the codebase**: `npm run lint`
+- **Run tests**: `npm test`
+- **Run a single test**: `npx vitest src/components/.../*Test.tsx` (replace `...` with the appropriate path)
+- **Set up project dependencies, Prisma client, and migrate the database**: `npm run setup`
 
-## Setup
+## Project Architecture Overview
 
-1. **Optional** Edit `.env` and add your Anthropic API key:
+The repository follows a Next.js 15 (App Router) structure:
 
-```
-ANTHROPIC_API_KEY=your-api-key-here
-```
+- **src/app** – Contains page-level components and route handlers.
+  - `[projectId]/page.tsx` – Dynamic route example.
+- **src/components** – Reusable UI components organized by feature (e.g., `ui` for buttons, dialogs, inputs).
+  - UI components often use Radix UI primitives and Tailwind CSS.
+- **src/lib** – Utility functions and services.
+  - **file-system.ts** – Operations for managing file system interactions.
+  - **prisma.ts** – Prisma client wrapper for database access.
+  - **auth.ts** – Authentication helpers.
+  - **transform/** – JSX/TypeScript transformers.
+- **src/actions** – Server‑side action functions used by API routes.
+  - `create-project.ts`, `get-projects.ts`, `get-project.ts` – Example actions.
+- **src/hooks** – Custom React hooks (`use-auth.ts`).
+- **src/contexts** – React contexts for state management (`file-system-context.tsx`, `chat-context.tsx`).
+- **prisma/migrations** – Database migration scripts.
+- **tests** – Test files colocated with components (`*Test.tsx`) and utilities.
 
-The project will run without an API key. Rather than using a LLM to generate components, static code will be returned instead.
+Key external libraries:
+- **@ai-sdk/anthropic** – Anthropic Claude API integration.
+- **@radix-ui/** – Unstyled UI primitives.
+- **tailwindcss**, **class-variance-authority**, **clsx** – Styling utilities.
+- **prisma** – ORM for SQLite database.
+- **Next.js**, **React 19**, **TypeScript** – Core framework and language.
 
-2. Install dependencies and initialize database
+## Typical Workflow
 
-```bash
-npm run setup
-```
+1. Run `npm run setup` to install dependencies and generate Prisma client.
+2. Use `npm run dev` to start the dev server at `http://localhost:3000`.
+3. Make UI or logic changes in `src/components` or `src/app`.
+4. Run `npm test` to execute all Vitest tests.
+5. Run `npm run lint` to check code style.
 
-This command will:
+## Notes
 
-- Install all dependencies
-- Generate Prisma client
-- Run database migrations
-
-## Running the Application
-
-### Development
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-## Usage
-
-1. Sign up or continue as anonymous user
-2. Describe the React component you want to create in the chat
-3. View generated components in real-time preview
-4. Switch to Code view to see and edit the generated files
-5. Continue iterating with the AI to refine your components
-
-## Features
-
-- AI-powered component generation using Claude
-- Live preview with hot reload
-- Virtual file system (no files written to disk)
-- Syntax highlighting and code editor
-- Component persistence for registered users
-- Export generated code
-
-## Tech Stack
-
-- Next.js 15 with App Router
-- React 19
-- TypeScript
-- Tailwind CSS v4
-- Prisma with SQLite
-- Anthropic Claude AI
-- Vercel AI SDK
+- The project can run without an Anthropic API key; in that mode it falls back to static code generation.
+- No files are written to disk automatically; generated components exist only in memory unless explicitly exported.
+- Persistent storage for registered users is handled via Prisma and SQLite.
