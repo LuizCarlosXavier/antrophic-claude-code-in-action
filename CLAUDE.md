@@ -54,3 +54,4 @@ Key external libraries:
 - Persistent storage for registered users is handled via Prisma and SQLite.
 - Use comments sparingly. Only comment important things.
 - The database schema is defined in the @prisma/schema.prisma file. Reference anytime you need to understand the structure of database.
+- always use conventional commits: feat: message..., chore: message... etc.
