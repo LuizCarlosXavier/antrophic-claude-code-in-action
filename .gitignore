@@ -30,6 +30,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.playwright-mcp/
+chat-response-snapshot.yml
+snapshot-report.yml
+snapshot-debug.yml
 
 # env files (can opt-in for committing if needed)
 .env
